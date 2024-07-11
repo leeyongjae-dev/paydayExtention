@@ -3,7 +3,7 @@
   "displayName": "payday",
   "description": "payday is back.",
   "icon": "images/free-icon-money-5904289.png",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.85.0"
   },

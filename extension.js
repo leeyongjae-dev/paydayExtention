@@ -11,24 +11,25 @@ const vscode = require("vscode");
 function activate(context) {
   // 현재 날짜를 생성합니다.
   var currentDate = new Date();
+  var nextPayDay = 10;
 
   // 다음 달의 날짜를 계산합니다.
   var nextMonth =
-    currentDate.getDate() > 10
+    currentDate.getDate() > nextPayDay
       ? currentDate.getMonth() + 1
       : currentDate.getMonth();
-  var nextMonthDate = new Date(currentDate.getFullYear(), nextMonth, 1); // 다음 달의 1일을 구합니다.
+  var nextMonthDate = new Date(currentDate.getFullYear(), nextMonth, nextPayDay); // 다음 달의 10일을 구합니다.
 
   // 다음 달의 해당 날짜를 설정합니다. (예: 10일로 설정) 0 : 일 / 6: 토
   let payday;
   if (nextMonthDate.getDay() === 0) {
-    payday = 8;
+    payday = nextPayDay - 2;
   } else if (nextMonthDate.getDay() === 6) {
-    payday = 9;
+    payday = nextPayDay - 1;
   } else {
-    payday = 10;
+    payday = nextPayDay;
   }
-  nextMonthDate.setDate(payday);
+  nextMonthDate.setDate(payday + 1); // 00시 기준으로 계산
 
   // 다음 달의 해당 날짜까지의 시간 차이를 계산합니다.
   var timeDifference = Math.abs(
@@ -43,7 +44,7 @@ function activate(context) {
 
   let message;
   if (currentDate.getDate() === payday) {
-    message = "[P A Y D A Y]";
+    message = "★P A Y D A Y★";
   } else {
     message = "[다음 월급까지 " + daysDifference + "일 남았습니다.]";
   }
